@@ -1,0 +1,68 @@
+{
+    "name": "Conditional Field Validator",
+
+    "namespace": "Stanford\\ConditionalFieldValidator",
+
+    "description": "This module provides conditional field validation using configurable rules. Project administrators can define conditions based on field values or regular expressions, and when all conditions are met, the module automatically validates one or more target fields using regex patterns. If a field fails validation, the module highlights it and displays an informational tooltip containing the custom error message. This ensures real-time data quality enforcement directly within data entry and survey forms.
+",
+
+    "documentation": "README.md",
+
+    "framework-version": 16,
+
+    "authors": [
+        {
+            "name": "Ihab Zeedia",
+            "email": "ihab.zeedia@stanford.edu",
+            "institution": "Stanford Health Care"
+        }
+    ],
+
+    "permissions": [
+        "redcap_survey_page_top"
+    ],
+
+    "enable-every-page-hooks-on-system-pages": false,
+
+    "enable-ajax-logging": false,
+
+    "auth-ajax-actions": [
+        "TestAction"
+    ],
+
+    "no-auth-ajax-actions": [
+        "TestAction"
+    ],
+
+    "links": {
+        "project": [
+
+        ],
+        "control-center": [
+
+        ]
+    },
+
+    "no-auth-pages": [
+
+    ],
+
+    "project-settings": [
+
+    ],
+
+    "system-settings": [
+
+    ],
+
+    "crons": [
+
+    ],
+
+    "compatibility": {
+        "php-version-min": "",
+        "php-version-max": "",
+        "redcap-version-min": "",
+        "redcap-version-max": ""
+    }
+}
