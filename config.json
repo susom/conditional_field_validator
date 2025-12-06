@@ -3,8 +3,7 @@
 
     "namespace": "Stanford\\ConditionalFieldValidator",
 
-    "description": "This module provides conditional field validation using configurable rules. Project administrators can define conditions based on field values or regular expressions, and when all conditions are met, the module automatically validates one or more target fields using regex patterns. If a field fails validation, the module highlights it and displays an informational tooltip containing the custom error message. This ensures real-time data quality enforcement directly within data entry and survey forms.
-",
+    "description": "This module provides conditional field validation using configurable rules. Project administrators can define conditions based on field values or regular expressions, and when all conditions are met, the module automatically validates one or more target fields using regex patterns. If a field fails validation, the module highlights it and displays an informational tooltip containing the custom error message. This ensures real-time data quality enforcement directly within data entry and survey forms.",
 
     "documentation": "README.md",
 
@@ -18,25 +17,12 @@
         }
     ],
 
-    "permissions": [
-        "redcap_survey_page_top"
-    ],
-
     "enable-every-page-hooks-on-system-pages": false,
 
     "enable-ajax-logging": false,
 
-    "auth-ajax-actions": [
-        "TestAction"
-    ],
-
-    "no-auth-ajax-actions": [
-        "TestAction"
-    ],
-
     "links": {
         "project": [
-
         ],
         "control-center": [
 
@@ -48,7 +34,63 @@
     ],
 
     "project-settings": [
-
+        {
+            "key": "rules",
+            "name": "<b>Validation Rules</b><br>Define the conditional validation rules for fields in this project",
+            "required": true,
+            "repeatable": true,
+            "type": "sub_settings",
+            "sub_settings": [
+                {
+                    "key": "trigger",
+                    "name": "<b>Trigger Field and Condition</b><br>Select the source field and define the condition to trigger validation",
+                    "required": true,
+                    "repeatable": true,
+                    "type": "sub_settings",
+                    "sub_settings": [
+                        {
+                            "key": "trigger-field",
+                            "name": "<b>Source Field</b><br>Select the field whose value will be evaluated",
+                            "type": "field-list",
+                            "required": true
+                        },
+                        {
+                            "key": "trigger-field-condition",
+                            "name": "<b>Condition</b><br>Define the condition/value that triggers validation",
+                            "type": "text",
+                            "required": true
+                        }
+                    ]
+                },
+                {
+                    "key": "validation",
+                    "name": "<b>Validation Field and Validation</b><br>Select the field to validate and define the regex pattern and error message",
+                    "required": true,
+                    "repeatable": true,
+                    "type": "sub_settings",
+                    "sub_settings": [
+                        {
+                            "key": "validation-field",
+                            "name": "<b>validation Field</b><br>Select the field whose value will be evaluated",
+                            "type": "field-list",
+                            "required": true
+                        },
+                        {
+                            "key": "validation-field-condition",
+                            "name": "<b>Condition</b><br>Define the condition/value that triggers validation",
+                            "type": "text",
+                            "required": true
+                        },
+                        {
+                            "key": "validation-field-error-message",
+                            "name": "<b>Error Message</b><br>Define the error message to display",
+                            "type": "text",
+                            "required": true
+                        }
+                    ]
+                }
+            ]
+        }
     ],
 
     "system-settings": [
