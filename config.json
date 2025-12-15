@@ -56,7 +56,7 @@
                         },
                         {
                             "key": "trigger-field-condition",
-                            "name": "<b>Condition</b><br>Define the condition/value that triggers validation",
+                            "name": "<b>Condition</b><br>Define the regex/value that triggers validation",
                             "type": "text",
                             "required": true
                         }
@@ -77,7 +77,7 @@
                         },
                         {
                             "key": "validation-field-condition",
-                            "name": "<b>Condition</b><br>Define the condition/value that triggers validation",
+                            "name": "<b>Condition</b><br>Define the regex/value to be validated.",
                             "type": "text",
                             "required": true
                         },
