@@ -42,48 +42,60 @@
             "type": "sub_settings",
             "sub_settings": [
                 {
+                    "key": "trigger-description",
+                    "name": "<b>How this rule works</b><br><span class=\"text-muted\">All trigger field conditions must evaluate to <b>true</b> before the validation field is evaluated.</span>",
+                    "required": false,
+                    "type": "descriptive"
+                },
+                {
                     "key": "trigger",
-                    "name": "<b>Trigger Field and Condition</b><br>Select the source field and define the condition to trigger validation",
+                    "name": "<b>Trigger Conditions</b><br>Pick one or more fields and define the condition for each. All must be true to run validation.",
                     "required": true,
                     "repeatable": true,
                     "type": "sub_settings",
                     "sub_settings": [
                         {
                             "key": "trigger-field",
-                            "name": "<b>Source Field</b><br>Select the field whose value will be evaluated",
+                            "name": "<b>Trigger Field</b><br>The field to check (source of the value).",
                             "type": "field-list",
                             "required": true
                         },
                         {
                             "key": "trigger-field-condition",
-                            "name": "<b>Condition</b><br>Define the regex/value that triggers validation",
+                            "name": "<b>Trigger Condition</b><br>Regex or exact value that must match for this trigger field.",
                             "type": "text",
                             "required": true
                         }
                     ]
                 },
                 {
+                    "key": "validation-description",
+                    "name": "<b>What happens during validation</b><br><span class=\"text-muted\">Validation rules are evaluated <b>only after</b> all trigger conditions are met. Each selected field below is then checked against its validation rule.</span>",
+                    "required": false,
+                    "type": "descriptive"
+                },
+                {
                     "key": "validation",
-                    "name": "<b>Validation Field and Validation</b><br>Select the field to validate and define the regex pattern and error message",
+                    "name": "<b>Validation Targets</b><br>Choose one or more fields to validate when the trigger conditions are met.",
                     "required": true,
                     "repeatable": true,
                     "type": "sub_settings",
                     "sub_settings": [
                         {
                             "key": "validation-field",
-                            "name": "<b>validation Field</b><br>Select the field whose value will be evaluated",
+                            "name": "<b>Field to Validate</b><br>The field that will be evaluated only after triggers are satisfied.",
                             "type": "field-list",
                             "required": true
                         },
                         {
                             "key": "validation-field-condition",
-                            "name": "<b>Condition</b><br>Define the regex/value to be validated.",
+                            "name": "<b>Validation Rule</b><br>Regex or exact value the validation field must match.",
                             "type": "text",
                             "required": true
                         },
                         {
                             "key": "validation-field-error-message",
-                            "name": "<b>Error Message</b><br>Define the error message to display",
+                            "name": "<b>Invalid Message</b><br>Message shown when the validation field fails the rule.",
                             "type": "text",
                             "required": true
                         }
