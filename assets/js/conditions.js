@@ -48,6 +48,18 @@ var ConditionalFieldValidatorModule = {
 
         self.buildFieldRuleIndex();
 
+        if (!self._debouncedValidate) {
+            self._debouncedValidate = (function () {
+                var timer = null;
+                return function () {
+                    clearTimeout(timer);
+                    timer = setTimeout(function () {
+                        self.validateAll();
+                    }, 100);
+                };
+            })();
+        }
+
         // Attach listeners for all involved fields
         Object.keys(self.fieldRuleIndex).forEach(function (fieldName) {
             var $fieldElems = $('[name="' + fieldName + '"]');
@@ -55,10 +67,49 @@ var ConditionalFieldValidatorModule = {
                 return;
             }
 
-            $fieldElems.on('blur', function () {
-                self.validateAll();
+            // Some REDCap pages (and some browsers) don't reliably fire `input` for autofill/piping.
+            // `keyup` covers typing; `change` covers selects/radios/checkboxes; `paste`/`cut` covers clipboard.
+            $fieldElems.on('keyup change paste cut', function () {
+                var val = $(this).val();
+                if (val != null && String(val).trim() !== '') {
+                    self._debouncedValidate();
+                }
             });
         });
+
+        // Fallback watcher for programmatic value updates that don't emit events
+        if (!self._valueWatchTimer) {
+            self._valueWatchLast = {};
+            self._valueWatchTimer = setInterval(function () {
+                try {
+                    Object.keys(self.fieldRuleIndex).forEach(function (fname) {
+                        var $els = $('[name="' + fname + '"]');
+                        if ($els.length === 0) return;
+
+                        var v;
+                        var type = $els.attr('type');
+                        if (type === 'radio' || type === 'checkbox') {
+                            var $checked = $els.filter(':checked');
+                            v = $checked.map(function () { return $(this).val(); }).get().join(',');
+                        } else {
+                            v = $els.val();
+                        }
+
+                        v = (v == null ? '' : String(v));
+                        var last = self._valueWatchLast[fname];
+
+                        if (last !== v) {
+                            self._valueWatchLast[fname] = v;
+                            if (v.trim() !== '') {
+                                self._debouncedValidate();
+                            }
+                        }
+                    });
+                } catch (e) {
+                    // fail silently
+                }
+            }, 250);
+        }
 
         // Initial validation on page load
         self.validateAll();
@@ -206,7 +257,6 @@ var ConditionalFieldValidatorModule = {
         var self = this;
         var $el = $('[name="' + fieldName + '"]');
         if ($el.length === 0) return;
-        console.log('Elements for field', fieldName, $el);
         // For radio/checkbox groups, attach error styling to the last input
         var $target = $el.last();
         $target.addClass('cfvm-invalid');
