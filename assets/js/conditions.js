@@ -276,7 +276,7 @@ var ConditionalFieldValidatorModule = {
                 'title': message,
                 'tabindex': 0,
                 'aria-hidden': 'true',
-                'style': 'cursor:pointer;font-size:20px;color:#d9534f;margin-left:6px;'
+                'style': 'cursor:pointer;font-size:20px;color:#d9534f;margin-left:6px;margin-top:-5px;position: absolute;'
             });
             $wrapper.append($icon);
             this.bindTooltip($icon);
