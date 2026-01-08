@@ -229,6 +229,11 @@ var ConditionalFieldValidatorModule = {
                           '<div class="tooltip-inner"></div>' +
                       '</div>'
                 });
+
+                // Hide tooltip when icon is clicked
+                $icon.on('click', function() {
+                    $(this).tooltip('hide');
+                });
             }
         } catch (e) {
             // Fail silently; the native title attribute will still work
@@ -244,6 +249,16 @@ var ConditionalFieldValidatorModule = {
     clearFieldErrors: function () {
         $('.cfvm-invalid').removeClass('cfvm-invalid');
         $('[name]').css({'border': '', 'background-color': ''});
+        // Destroy tooltips before removing icons to prevent orphaned tooltip-inner elements
+        try {
+            $('.cfvm-info-icon').each(function() {
+                if ($.fn.tooltip) {
+                    $(this).tooltip('dispose');
+                }
+            });
+        } catch (e) {
+            // fail silently
+        }
         $('.cfvm-info-icon').remove();
     },
 
